@@ -1,5 +1,3 @@
-# These are supported funding model platforms
-
-github: yse
+github: [yse, cas4ey]
 open_collective: easy_profiler
-custom: paypal.me/ysergey
+custom: ["https://paypal.me/ysergey"]

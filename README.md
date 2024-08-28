@@ -1,6 +1,6 @@
 # easy_profiler [![2.1.0](https://img.shields.io/badge/stable-2.1.0-009688.svg)](https://github.com/yse/easy_profiler/releases/tag/v2.1.0) [![2.x.x](https://img.shields.io/badge/latest-2.x.x-f57f17.svg)](https://github.com/yse/easy_profiler)
 
-[![Build Status](https://travis-ci.org/yse/easy_profiler.svg?branch=develop)](https://travis-ci.org/yse/easy_profiler)
+[![Build Status](https://travis-ci.com/yse/easy_profiler.svg?branch=develop)](https://travis-ci.com/yse/easy_profiler)
 [![Build Status](https://ci.appveyor.com/api/projects/status/github/yse/easy_profiler?branch=develop&svg=true)](https://ci.appveyor.com/project/yse/easy-profiler/branch/develop)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -321,7 +321,7 @@ struct EasyFileHeader {
 # License
 
 Licensed under either of
-- MIT license ([LICENSE.MIT](LICENSE.MIT) or http://opensource.org/licenses/MIT)
-- Apache License, Version 2.0, ([LICENSE.APACHE](LICENSE.APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
+- MIT license ([mit.lic](mit.lic) or http://opensource.org/licenses/MIT)
+- Apache License, Version 2.0 ([apache.lic](apache.lic) or http://www.apache.org/licenses/LICENSE-2.0)
 
 at your option.
