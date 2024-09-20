@@ -1,4 +1,4 @@
-# easy_profiler [![2.1.0](https://img.shields.io/badge/stable-2.1.0-009688.svg)](https://github.com/yse/easy_profiler/releases/tag/v2.1.0) [![2.x.x](https://img.shields.io/badge/latest-2.x.x-f57f17.svg)](https://github.com/yse/easy_profiler)
+# easy_profiler [![2.1.0](https://img.shields.io/badge/stable-2.1.0-009688.svg)](https://github.com/yse/easy_profiler/releases/tag/v2.1.0) [![3.x.x](https://img.shields.io/badge/latest-3.x.x-f57f17.svg)](https://github.com/yse/easy_profiler)
 
 [![Build Status](https://ci.appveyor.com/api/projects/status/github/yse/easy_profiler?branch=develop&svg=true)](https://ci.appveyor.com/project/yse/easy-profiler/branch/develop)
 
@@ -24,7 +24,7 @@
     - [Windows](#windows)
     - [QNX](#qnx)
     - [Android](#android)
-5. [Notes about major release (1.0 -> 2.0)](#status)
+5. [Notes about major release 1.x -> 2.x and 2.x -> 3.x](#status)
 6. [License](#license)
 
 # About
@@ -298,6 +298,7 @@ For more information and example for `QNXToolchain.cmake` see [this PR](https://
 You can build native library for android by using NDK and standalone toolchain. See [comment for this PR](https://github.com/yse/easy_profiler/pull/137#issuecomment-436167127) to get a more detailed instruction.
 
 # Status
+## Migration 1.x --> 2.x
 Branch `develop` contains all v2.0.0 features and new UI style.  
 Please, note that .prof file header has changed in v2.0.0:
 ```cpp
@@ -316,6 +317,10 @@ struct EasyFileHeader {
     uint32_t total_descriptors_number = 0;
 };
 ```
+
+## Migration 2.x --> 3.x
+
+There are some functions in the 2.x release that conflicts with system functions, for example `now()`. You can find more details in the related [issue](https://github.com/yse/easy_profiler/issues/215) and [PR](https://github.com/yse/easy_profiler/pull/188)
 
 # License
 
