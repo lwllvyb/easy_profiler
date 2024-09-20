@@ -85,7 +85,7 @@ extern const uint32_t EASY_PROFILER_VERSION = (static_cast<uint32_t>(EASY_PROFIL
 
 extern "C" {
 
-PROFILER_API uint8_t versionMajor()
+PROFILER_API uint8_t apiVersionMajor()
 {
     static_assert(0 <= EASY_PROFILER_VERSION_MAJOR && EASY_PROFILER_VERSION_MAJOR <= 255,
                   "EASY_PROFILER_VERSION_MAJOR must be defined in range [0, 255]");
@@ -93,7 +93,7 @@ PROFILER_API uint8_t versionMajor()
     return EASY_PROFILER_VERSION_MAJOR;
 }
 
-PROFILER_API uint8_t versionMinor()
+PROFILER_API uint8_t apiVersionMinor()
 {
     static_assert(0 <= EASY_PROFILER_VERSION_MINOR && EASY_PROFILER_VERSION_MINOR <= 255,
                   "EASY_PROFILER_VERSION_MINOR must be defined in range [0, 255]");
@@ -101,7 +101,7 @@ PROFILER_API uint8_t versionMinor()
     return EASY_PROFILER_VERSION_MINOR;
 }
 
-PROFILER_API uint16_t versionPatch()
+PROFILER_API uint16_t apiVersionPatch()
 {
     static_assert(0 <= EASY_PROFILER_VERSION_PATCH && EASY_PROFILER_VERSION_PATCH <= 65535,
                   "EASY_PROFILER_VERSION_PATCH must be defined in range [0, 65535]");
@@ -109,12 +109,12 @@ PROFILER_API uint16_t versionPatch()
     return EASY_PROFILER_VERSION_PATCH;
 }
 
-PROFILER_API uint32_t version()
+PROFILER_API uint32_t apiVersion()
 {
     return EASY_PROFILER_VERSION;
 }
 
-PROFILER_API const char* versionName()
+PROFILER_API const char* apiVersionName()
 {
 #ifdef EASY_PROFILER_API_DISABLED
     return EASY_PROFILER_PRODUCT_VERSION "_disabled";
@@ -127,7 +127,7 @@ PROFILER_API const char* versionName()
 
 #if !defined(EASY_PROFILER_API_DISABLED)
 
-PROFILER_API profiler::timestamp_t now()
+PROFILER_API profiler::timestamp_t timeNow()
 {
     return profiler::clock::now();
 }
@@ -295,7 +295,7 @@ PROFILER_API profiler::timestamp_t main_thread_frameTimeLocalAvg(profiler::Durat
 
 #else // EASY_PROFILER_API_DISABLED
 
-PROFILER_API profiler::timestamp_t now() { return 0; }
+PROFILER_API profiler::timestamp_t timeNow() { return 0; }
 PROFILER_API profiler::timestamp_t toNanoseconds(profiler::timestamp_t) { return 0; }
 PROFILER_API profiler::timestamp_t toMicroseconds(profiler::timestamp_t) { return 0; }
 
