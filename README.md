@@ -1,6 +1,5 @@
 # easy_profiler [![2.1.0](https://img.shields.io/badge/stable-2.1.0-009688.svg)](https://github.com/yse/easy_profiler/releases/tag/v2.1.0) [![2.x.x](https://img.shields.io/badge/latest-2.x.x-f57f17.svg)](https://github.com/yse/easy_profiler)
 
-[![Build Status](https://travis-ci.com/yse/easy_profiler.svg?branch=develop)](https://travis-ci.com/yse/easy_profiler)
 [![Build Status](https://ci.appveyor.com/api/projects/status/github/yse/easy_profiler?branch=develop&svg=true)](https://ci.appveyor.com/project/yse/easy-profiler/branch/develop)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -267,17 +266,17 @@ If you are using Visual Studio you can generate solution by cmake generator comm
 Examples shows how to generate Win64 solution for Visual Studio 2013. To generate for another version use proper cmake generator (-G "name of generator").
 
 ### Way 1
-Specify path to cmake scripts in Qt5 dir (usually in lib/cmake subdir) and execute cmake generator command,
+Specify path to cmake scripts in Qt6 dir (usually in lib/cmake subdir) and execute cmake generator command,
 for example:
 ```batch
 $ mkdir build
 $ cd build
-$ cmake -DCMAKE_PREFIX_PATH="C:\Qt\5.3\msvc2013_64\lib\cmake" .. -G "Visual Studio 12 2013 Win64"
+$ cmake -DCMAKE_PREFIX_PATH="C:\Qt\6.7.2\msvc2013_64\lib\cmake" .. -G "Visual Studio 12 2013 Win64"
 ```
 
 ### Way 2
-Create system variable "Qt5Widgets_DIR" and set it's value to "[path-to-Qt5-binaries]\lib\cmake\Qt5Widgets".
-For example, "C:\Qt\5.3\msvc2013_64\lib\cmake\Qt5Widgets".
+Create system variable "Qt6Widgets_DIR" and set it's value to "[path-to-Qt6-binaries]\lib\cmake\Qt6Widgets".
+For example, "C:\Qt\5.3\msvc2013_64\lib\cmake\Qt6Widgets".
 And then run cmake generator as follows:
 ```batch
 $ mkdir build
