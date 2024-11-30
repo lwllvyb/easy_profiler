@@ -8,7 +8,7 @@ find_package(Qt6Widgets)
 find_package(Qt6Core5Compat)
 
 if (Qt6Widgets_FOUND)
-    message(STATUS "Using Qt v${Qt5Widgets_VERSION}")
+    message(STATUS "Using Qt v${Qt6Widgets_VERSION}")
     if (NOT("${CMAKE_BUILD_TYPE}" STREQUAL "Debug") AND WIN32)
         set(APPLICATION_PLATFORM WIN32)
     endif ()
@@ -89,6 +89,6 @@ if (Qt6Widgets_FOUND)
 
     set_property(TARGET profiler_gui PROPERTY INSTALL_RPATH_USE_LINK_PATH TRUE)
 else ()
-    message(STATUS "INFO\n\n\tQt5 not found! Generating EasyProfiler projects without GUI.\n")
+    message(STATUS "INFO\n\n\tQt6 not found! Generating EasyProfiler projects without GUI.\n")
 endif ()
 

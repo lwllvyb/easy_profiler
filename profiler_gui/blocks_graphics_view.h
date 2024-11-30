@@ -201,6 +201,7 @@ private:
     ::profiler::timestamp_t         m_beginTime; ///< Begin time of profiler session. Used to reduce values of all begin and end times of profiler blocks.
     qreal                          m_sceneWidth; ///< 
     qreal                               m_scale; ///< Current scale
+    qreal                            m_minScale; ///< Minimal scale to limit max time in thread widget
     qreal                              m_offset; ///< Have to use manual offset for all scene content instead of using scrollbars because QScrollBar::value is 32-bit integer :(
     qreal                  m_visibleRegionWidth; ///< Visible scene rectangle in scene coordinates + width of vertical scrollbar (if visible)
     qreal                        m_timelineStep; ///< 
@@ -278,6 +279,8 @@ signals:
 private:
 
     // Private non-virtual methods
+
+    void calculateMinScale();
 
     void notifySceneSizeChange();
     void notifyVisibleRegionSizeChange();

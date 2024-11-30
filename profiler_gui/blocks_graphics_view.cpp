@@ -91,7 +91,7 @@
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-const qreal MIN_SCALE = pow(profiler_gui::SCALING_COEFFICIENT_INV, 70); // Up to 1000 sec scale
+const qreal MIN_SCALE = pow(profiler_gui::SCALING_COEFFICIENT_INV, 60); // Up to 100 sec scale and 1000 sec max
 const qreal MAX_SCALE = pow(profiler_gui::SCALING_COEFFICIENT, 45); // ~23000 --- Up to 10 ns scale
 const qreal BASE_SCALE = pow(profiler_gui::SCALING_COEFFICIENT_INV, 25); // ~0.003
 
@@ -680,6 +680,7 @@ BlocksGraphicsView::BlocksGraphicsView(QWidget* _parent)
     , m_beginTime(profiler_gui::numeric_max<decltype(m_beginTime)>())
     , m_sceneWidth(0)
     , m_scale(1)
+    , m_minScale(MIN_SCALE)
     , m_offset(0)
     , m_visibleRegionWidth(0)
     , m_timelineStep(0)
@@ -880,6 +881,8 @@ void BlocksGraphicsView::setTree(const profiler::thread_blocks_tree_t& _blocksTr
 
     if (_blocksTree.empty())
         return;
+
+    calculateMinScale();
 
     m_backgroundItem = new BackgroundItem();
     scene()->addItem(m_backgroundItem);
@@ -1276,7 +1279,7 @@ void BlocksGraphicsView::scaleTo(qreal _scale)
 
     // have to limit scale because of Qt's QPainter feature: it doesn't draw text
     // with very big coordinates (but it draw rectangles with the same coordinates good).
-    m_scale = clamp(MIN_SCALE, _scale, MAX_SCALE); 
+    m_scale = clamp(m_minScale, _scale, MAX_SCALE);
     const int vbar_width = updateVisibleSceneRect();
 
     // Update slider width for scrollbar
@@ -1369,7 +1372,7 @@ void BlocksGraphicsView::onWheel(qreal _scenePos, int _wheelDelta)
     // with very big coordinates (but it draw rectangles with the same coordinates good).
     _scenePos -= m_offset;
     _scenePos *= m_scale;
-    m_scale = clamp(MIN_SCALE, m_scale * scaleCoeff, MAX_SCALE);
+    m_scale = clamp(m_minScale, m_scale * scaleCoeff, MAX_SCALE);
 
     //updateVisibleSceneRect(); // Update scene rect
 
@@ -1769,13 +1772,13 @@ void BlocksGraphicsView::onZoomSelection()
     if (fabs(deltaScale - 1) < 1e-6)
     {
         // Restore scale value multiple to SCALING_COEFFICIENT
-        const int steps = static_cast<int>(log(m_scale / MIN_SCALE) / log(profiler_gui::SCALING_COEFFICIENT));
-        const auto desiredScale = MIN_SCALE * pow(profiler_gui::SCALING_COEFFICIENT, steps);
+        const int steps = static_cast<int>(log(m_scale / m_minScale) / log(profiler_gui::SCALING_COEFFICIENT));
+        const auto desiredScale = m_minScale * pow(profiler_gui::SCALING_COEFFICIENT, steps);
         deltaScale = desiredScale / m_scale;
     }
 
     m_offset = m_selectionItem->left() + (m_selectionItem->width() - m_visibleRegionWidth / deltaScale) * 0.5;
-    m_scale = clamp(MIN_SCALE, m_scale * deltaScale, MAX_SCALE);
+    m_scale = clamp(m_minScale, m_scale * deltaScale, MAX_SCALE);
 
     // Update slider width for scrollbar
     notifyVisibleRegionSizeChange();
@@ -2086,6 +2089,22 @@ void BlocksGraphicsView::resizeEvent(QResizeEvent* event)
 }
 
 //////////////////////////////////////////////////////////////////////////
+
+void BlocksGraphicsView::calculateMinScale()
+{
+    profiler::timestamp_t threadMaxDuration = 0;
+    for (const auto& [_, root]: EASY_GLOBALS.profiler_blocks) {
+        if (root.children.empty()) {
+            continue;
+        }
+        const auto threadDuration = easyBlock(root.children.back()).tree.node->end() - easyBlock(root.children.front()).tree.node->begin();
+        threadMaxDuration = std::max(threadMaxDuration, threadDuration);
+    }
+    // Every 10 step is equal to x10 in max time in thread view
+    // Formulae for correct coefficient is: log10(desired_max_time) = x/10 + 30
+    const auto scalePower = 10.0*log(threadMaxDuration*1.10/1e9)/log(10.0) + 30.0;
+    m_minScale = pow(profiler_gui::SCALING_COEFFICIENT_INV, scalePower);
+}
 
 void BlocksGraphicsView::initMode()
 {
